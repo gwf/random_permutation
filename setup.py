@@ -1,3 +1,8 @@
+"""
+This setup file is used to package the random_permutation module.
+The module is used for efficiently generating very large random permutations.
+"""
+
 from setuptools import setup, find_packages
 
 setup(
