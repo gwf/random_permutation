@@ -27,8 +27,8 @@ for i in range(n):
   print(p[i])
 ```
 
-This will output a `RandomPermutation` object of length `n`. You can use
-the `seed` parameter to vary the permutations and the `num_ciphers`
+This will output the elements of the `RandomPermutation` object. You can
+use the `seed` parameter to vary the permutations and the `num_ciphers`
 parameter to control the number of ciphers used.
 
 ## Testing
