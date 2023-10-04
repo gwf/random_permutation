@@ -140,7 +140,19 @@ class RandomPermutation:
     Raises:
       IndexError: If the index is greater than or equal to the maximum value.
     """
-    if index >= self.max:
+    if isinstance(index, slice):
+      start = index.start or 0
+      stop = index.stop or self.max
+      step = index.step or 1
+      for index in range(start, stop, step):
+        while True:
+          index = self._feistel(index)
+          if index < self.max:
+            yield index
+            break
+      return
+
+    elif index >= self.max:
       raise IndexError("Index out of range")
     while True:
       index = self._feistel(index)
@@ -184,6 +196,9 @@ class RandomPermutation:
       str: A string representation of the RandomPermutation object.
     """
     return f"RandomPermutation(max={self.max}, seed={self.seed})"
+
+###############################################################################
+
 
 ###############################################################################
 
