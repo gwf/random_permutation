@@ -12,7 +12,7 @@ setup(
   author_email='gary@flake.org',
   description=
   'A module for efficiently generating very large random permutations',
-  long_description=open('README.md').read(),
+  long_description=open('README.md', encoding='utf-8').read(),
   long_description_content_type='text/markdown',
   packages=find_packages(
     include=['random_permutation', 'random_permutation.*']),
