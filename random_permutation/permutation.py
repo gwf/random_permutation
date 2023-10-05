@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 This module provides a class for generating random permutations of a range
 of numbers via a Feistel network over AES-128.  It operates in O(1) time
@@ -27,7 +26,6 @@ and space for each element of the permutation.
 # SOFTWARE.
 #
 # This package is inspired by https://github.com/dc0d32/RangePermute
-
 import sys
 import math
 import random
@@ -140,24 +138,44 @@ class RandomPermutation:
     Raises:
       IndexError: If the index is greater than or equal to the maximum value.
     """
-    if isinstance(index, slice):
-      start = index.start or 0
-      stop = index.stop or self.max
-      step = index.step or 1
-      for index in range(start, stop, step):
-        while True:
-          index = self._feistel(index)
-          if index < self.max:
-            yield index
-            break
-      return
+    if isinstance(index, int):
+      if index < 0: index = self.max + index
+      if index >= self.max:
+        raise IndexError("Index out of range")
+      while True:
+        index = self._feistel(index)
+        if index < self.max:
+          return index
+    elif isinstance(index, slice):
+      return self.__getslice__(index)
+    raise TypeError("Invalid index.")
 
-    elif index >= self.max:
-      raise IndexError("Index out of range")
-    while True:
-      index = self._feistel(index)
-      if index < self.max:
-        return index
+  ###########################################################################
+
+  def __getslice__(self, index):
+    """
+    Generates a slice from a permutation.
+
+    Parameters:
+      start (int): The starting index of the permutation element to get.
+      stop (int): The stopping index of the permutation element to get.
+      step (int): The step size of the permutation element to get.
+
+    Returns:
+      generator: of the slice of the permutation specified.
+    """
+    start = index.start or 0
+    if start < 0: start = self.max + start
+    stop = index.stop or self.max
+    if stop < 0: stop = self.max + stop
+    step = index.step or 1
+    if step < 0: step = self.max + step
+    for index in range(start, stop, step):
+      while True:
+        index = self._feistel(index)
+        if index < self.max:
+          yield index
+          break
 
   ###########################################################################
 
@@ -196,9 +214,6 @@ class RandomPermutation:
       str: A string representation of the RandomPermutation object.
     """
     return f"RandomPermutation(max={self.max}, seed={self.seed})"
-
-###############################################################################
-
 
 ###############################################################################
 
