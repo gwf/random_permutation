@@ -10,7 +10,7 @@ with open('README.md', encoding='utf-8') as f:
 
 setup(
   name='random_permutation',
-  version='0.1.0',
+  version='0.1.11',
   author='Gary William Flake',
   author_email='gary@flake.org',
   description=
