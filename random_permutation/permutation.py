@@ -146,7 +146,7 @@ class RandomPermutation:
         index = self._feistel(index)
         if index < self.max:
           return index
-    elif isinstance(index, slice):
+    if isinstance(index, slice):
       return self.__getslice__(index)
     raise TypeError("Invalid index.")
 
